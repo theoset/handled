@@ -39,6 +39,7 @@
   <div class="hd-section">
     <div class="hd-wrap">
 
+      <!-- ── PUBLIC WORKER GRID ── -->
       <div id="public-section">
         <div class="hd-section-label">Our Workers</div>
         <div class="hd-section-title">Verified, rated,<br>ready to go.</div>
@@ -63,36 +64,44 @@
               <div><div class="hd-wstat-num">2yr</div><div class="hd-wstat-lbl">Exp.</div></div>
             </div>
           </div>
-          
           <div class="hd-worker-card">
             <div class="hd-worker-top">
-              <div class="hd-w-avatar" style="background:#4ade80">G</div>
+              <div class="hd-w-avatar" style="background:#f0c040">T</div>
               <div class="hd-w-info">
-                <h4>Gary <span class="hd-badge hd-badge-verified" style="font-size:.6rem;padding:2px 6px">✓ Verified</span></h4>
-                <p>Gaborone, Phase 2</p>
+                <h4>Tshego Moleleki <span class="hd-badge hd-badge-verified" style="font-size:.6rem;padding:2px 6px">✓ Verified</span></h4>
+                <p>Gaborone, Broadhurst</p>
               </div>
             </div>
             <div class="hd-w-skills">
-              <span class="hd-skill-tag">🔨 Handyman</span>
               <span class="hd-skill-tag">🔧 Plumbing</span>
+              <span class="hd-skill-tag">🔨 Handyman</span>
             </div>
             <div class="hd-w-stats">
-              <div>
-                <div class="hd-wstat-num">134</div>
-                <div class="hd-wstat-lbl">Jobs</div>
+              <div><div class="hd-wstat-num">124</div><div class="hd-wstat-lbl">Jobs</div></div>
+              <div><div class="hd-wstat-num">5.0★</div><div class="hd-wstat-lbl">Rating</div></div>
+              <div><div class="hd-wstat-num">5yr</div><div class="hd-wstat-lbl">Exp.</div></div>
+            </div>
+          </div>
+          <div class="hd-worker-card">
+            <div class="hd-worker-top">
+              <div class="hd-w-avatar" style="background:#e07b30">L</div>
+              <div class="hd-w-info">
+                <h4>Lesego Dube <span class="hd-badge hd-badge-pending-kyc" style="font-size:.6rem;padding:2px 6px">⏳ KYC Pending</span></h4>
+                <p>Tlokweng</p>
               </div>
-              <div>
-                <div class="hd-wstat-num">5.0★</div>
-                <div class="hd-wstat-lbl">Rating</div>
-              </div>
-              <div>
-                <div class="hd-wstat-num">4yr</div>
-                <div class="hd-wstat-lbl">Exp.</div>
-              </div>
+            </div>
+            <div class="hd-w-skills">
+              <span class="hd-skill-tag">🛵 Delivery</span>
+              <span class="hd-skill-tag">📦 Moving</span>
+            </div>
+            <div class="hd-w-stats">
+              <div><div class="hd-wstat-num">0</div><div class="hd-wstat-lbl">Jobs</div></div>
+              <div><div class="hd-wstat-num">—</div><div class="hd-wstat-lbl">Rating</div></div>
             </div>
           </div>
         </div>
 
+        <!-- AUTH BOX -->
         <div class="hd-worker-auth-box">
           <div class="hd-section-label" style="margin-bottom:7px">Join / Login</div>
           <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:5px">Earn on your schedule.</h3>
@@ -103,14 +112,16 @@
             <button class="hd-tab"        onclick="switchTab('wreg')">Register</button>
           </div>
 
+          <!-- LOGIN -->
           <div id="tab-wlogin">
             <div class="hd-form-group"><label>Email</label><input type="email" id="w-login-email" placeholder="your@email.com" /></div>
             <div class="hd-form-group"><label>Password</label><input type="password" id="w-login-pass" placeholder="••••••••" /></div>
             <button class="hd-auth-submit" onclick="doWorkerLogin()">Login as Worker →</button>
           </div>
 
+          <!-- REGISTER -->
           <div id="tab-wreg" style="display:none">
-            <div class="hd-form-group"><label>Full Name</label><input type="text" id="w-reg-name" placeholder="Your full name" /></div>
+            <div class="hd-form-group"><label>Full Name</label><input type="text" id="w-reg-name" placeholder="e.g. Kabo Sithole" /></div>
             <div class="hd-form-row">
               <div class="hd-form-group"><label>Email</label><input type="email" id="w-reg-email" placeholder="you@email.com" /></div>
               <div class="hd-form-group"><label>Password</label><input type="password" id="w-reg-pass" placeholder="••••••••" /></div>
@@ -122,13 +133,13 @@
             <div class="hd-form-group">
               <label>Select up to 4 services you offer</label>
               <div class="hd-svc-pick-grid" id="svc-pick">
-                <label class="hd-svc-pick-item"><input type="checkbox" value="House Cleaning"> 🏠 House Cleaning</label>
-                <label class="hd-svc-pick-item"><input type="checkbox" value="Gardening"> 🌿 Gardening</label>
-                <label class="hd-svc-pick-item"><input type="checkbox" value="Moving Assistance"> 📦 Moving</label>
-                <label class="hd-svc-pick-item"><input type="checkbox" value="Handyman"> 🔨 Handyman</label>
-                <label class="hd-svc-pick-item"><input type="checkbox" value="Plumbing"> 🔧 Plumbing</label>
-                <label class="hd-svc-pick-item"><input type="checkbox" value="Delivery"> 🛵 Delivery</label>
-                <label class="hd-svc-pick-item"><input type="checkbox" value="Miscellaneous"> 🎲 Miscellaneous</label>
+                <label class="hd-svc-pick-item"><input type="checkbox" value="House Cleaning" onchange="toggleSvc(this)"> 🏠 House Cleaning</label>
+                <label class="hd-svc-pick-item"><input type="checkbox" value="Gardening" onchange="toggleSvc(this)"> 🌿 Gardening</label>
+                <label class="hd-svc-pick-item"><input type="checkbox" value="Moving Assistance" onchange="toggleSvc(this)"> 📦 Moving</label>
+                <label class="hd-svc-pick-item"><input type="checkbox" value="Handyman" onchange="toggleSvc(this)"> 🔨 Handyman</label>
+                <label class="hd-svc-pick-item"><input type="checkbox" value="Plumbing" onchange="toggleSvc(this)"> 🔧 Plumbing</label>
+                <label class="hd-svc-pick-item"><input type="checkbox" value="Delivery" onchange="toggleSvc(this)"> 🛵 Delivery</label>
+                <label class="hd-svc-pick-item"><input type="checkbox" value="Miscellaneous" onchange="toggleSvc(this)"> 🎲 Miscellaneous</label>
               </div>
             </div>
             <div class="hd-divider"></div>
@@ -152,11 +163,20 @@
                 </div>
               </div>
             </div>
-            <button class="hd-auth-submit" onclick="doWorkerRegister()">Submit Registration &amp; KYC →</button>
+            <div class="hd-form-group">
+              <label>Proof of Address (optional)</label>
+              <div class="hd-kyc-upload-box" onclick="document.getElementById('kyc-addr').click()">
+                <input type="file" id="kyc-addr" accept="image/*,.pdf" style="display:none" onchange="setFile(this,'kyc-addr-name','📄')">
+                <div class="ub-icon">📄</div><p>Utility bill or bank statement</p>
+                <div class="ub-name" id="kyc-addr-name"></div>
+              </div>
+            </div>
+            <button class="hd-auth-submit" onclick="doWorkerRegister()">Submit Registration & KYC →</button>
           </div>
         </div>
       </div>
 
+      <!-- ── WORKER DASHBOARD ── -->
       <div id="dashboard-section" style="display:none">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:13px;margin-bottom:20px">
           <div>
@@ -201,17 +221,26 @@
 let currentWorker = null;
 let isOnline = false;
 
+// ── tab switch ──
 function switchTab(t) {
   document.getElementById('tab-wlogin').style.display = t==='wlogin' ? '' : 'none';
   document.getElementById('tab-wreg').style.display   = t==='wreg'   ? '' : 'none';
   document.querySelectorAll('.hd-tab').forEach((b,i)=> b.classList.toggle('active', (i===0 && t==='wlogin')||(i===1 && t==='wreg')));
 }
 
+// ── service checkbox guard ──
+function toggleSvc(cb) {
+  const checked = document.querySelectorAll('#svc-pick input:checked');
+  if (checked.length > 4) { cb.checked = false; toast('Maximum 4 services allowed.','⚠'); }
+}
+
+// ── kyc file label ──
 function setFile(inp, labelId) {
   const el = document.getElementById(labelId);
   if (el && inp.files[0]) el.textContent = inp.files[0].name;
 }
 
+// ── login ──
 function doWorkerLogin() {
   const email = document.getElementById('w-login-email').value.trim();
   const pass  = document.getElementById('w-login-pass').value;
@@ -221,81 +250,175 @@ function doWorkerLogin() {
   loginWorker(u);
 }
 
+// ── register ──
+async function doWorkerRegister() {
+  const name  = document.getElementById('w-reg-name').value.trim();
+  const email = document.getElementById('w-reg-email').value.trim();
+  const pass  = document.getElementById('w-reg-pass').value;
+  const phone = document.getElementById('w-reg-phone').value.trim();
+  const loc   = document.getElementById('w-reg-loc').value.trim();
+  const svcs  = [...document.querySelectorAll('#svc-pick input:checked')].map(c=>c.value);
+  const hasId      = !!document.getElementById('kyc-id').files[0];
+  const hasSelfie = !!document.getElementById('kyc-selfie').files[0];
+  
+  if (!name||!email||!pass) { toast('Fill in all required fields.','⚠'); return; }
+  if (!svcs.length) { toast('Select at least one service.','⚠'); return; }
+  if (!hasId||!hasSelfie) { toast('Upload Government ID and Selfie.','⚠'); return; }
+  
+  // Real-time integration into your 'worker_profiles' Supabase table
+  if (window.supabaseClient) {
+    const { data, error } = await window.supabaseClient
+      .from('worker_profiles')
+      .insert([
+        {
+          name: name,
+          email: email,
+          phone: phone,
+          location_area: loc,
+          services: svcs,
+          kyc_status: 'pending' // Initial status state for Admin approval pipelines
+        }
+      ]);
+
+    if (error) {
+      toast('Registration Error: ' + error.message, '✕');
+      return;
+    }
+  }
+
+  const users = store.getUsers();
+  if (users[email]) { toast('Account already exists.','⚠'); return; }
+  const u = { name, email, pass, role:'worker', phone, location:loc, services:svcs, kyc:{ status:'pending', submittedAt:new Date().toLocaleString() }, jobsDone:0, rating:0 };
+  users[email] = u;
+  store.saveUsers(users);
+  store.addNotif('New Worker', name+' ('+email+') registered.');
+  loginWorker(u);
+  toast('Registered! KYC pending review.','🎉');
+}
+
 function loginWorker(u) {
   currentWorker = u;
   isOnline = u.online || false;
   document.getElementById('public-section').style.display   = 'none';
   document.getElementById('dashboard-section').style.display = '';
-  document.getElementById('dash-welcome').textContent = 'Welcome!';
+  document.getElementById('dash-welcome').textContent = 'Welcome, '+u.name.split(' ')[0]+'!';
+  renderKyc(u.kyc);
+  renderStats();
+  renderJobs();
+  toast('Welcome back, '+u.name.split(' ')[0]+'!','👋');
 }
 
-function doWorkerLogout() { window.location.reload(); }
+function renderKyc(kyc) {
+  const badge  = document.getElementById('kyc-badge');
+  const banner = document.getElementById('kyc-banner');
+  if (!kyc) return;
+  if (kyc.status==='approved') {
+    badge.className='hd-badge hd-badge-verified'; badge.textContent='✓ Verified';
+    banner.innerHTML='<div class="hd-kyc-status-banner hd-kyc-approved">✓ Identity verified — you can accept jobs!</div>';
+  } else if (kyc.status==='rejected') {
+    badge.className='hd-badge hd-badge-pending-kyc'; badge.textContent='✗ KYC Rejected';
+    banner.innerHTML='<div class="hd-kyc-status-banner hd-kyc-rejected">✗ KYC Rejected: '+(kyc.rejectReason||'Documents invalid.')+'</div>';
+  } else {
+    badge.className='hd-badge hd-badge-pending-kyc'; badge.textContent='⏳ KYC Pending';
+    banner.innerHTML='<div class="hd-kyc-status-banner hd-kyc-pending">⏳ Your KYC is under review. You can browse jobs but cannot accept until approved.</div>';
+  }
+}
+
+function renderStats() {
+  if (!currentWorker) return;
+  const reqs = store.getRequests().filter(r=>r.workerId===currentWorker.email);
+  const done   = reqs.filter(r=>r.status==='done').length;
+  const active = reqs.filter(r=>r.status==='accepted'||r.status==='progress').length;
+  const earn   = reqs.filter(r=>r.status==='done').reduce((s,r)=>s+r.totalPrice*.85,0);
+  document.getElementById('stat-done').textContent   = done;
+  document.getElementById('stat-active').textContent = active;
+  document.getElementById('stat-earn').textContent   = 'P'+Math.round(earn);
+}
+
+function renderJobs() {
+  if (!currentWorker) return;
+  const allReqs = store.getRequests();
+  const svcs = currentWorker.services || [];
+  const jobs = allReqs.filter(r=>(r.status==='pending'||r.workerId===currentWorker.email) && svcs.includes(r.category));
+  const el = document.getElementById('jobs-list');
+  if (!jobs.length) { el.innerHTML='<div class="hd-empty-state"><div class="ei">📋</div><p>No available jobs matching your services right now.</p></div>'; return; }
+  const kyc = currentWorker.kyc;
+  el.innerHTML = jobs.map(r=>{
+    const mine = r.workerId===currentWorker.email;
+    const canAccept = kyc && kyc.status==='approved';
+    const btn = mine
+      ? `<button class="hd-btn-accepted">✓ Accepted</button>`
+      : canAccept
+        ? `<button class="hd-btn-accept" onclick="acceptJob(${r.id})">Accept</button>`
+        : `<span style="font-size:.72rem;color:var(--muted)">KYC needed</span>`;
+    return `<div class="hd-job-card">
+      <div class="hd-j-emoji">${r.emoji}</div>
+      <div class="hd-j-body">
+        <h4>${r.category}${r.subOption?' — '+r.subOption:''}</h4>
+        <p>${r.desc}</p>
+        <p style="margin-top:4px">📍 ${r.location} · ${r.locationType==='outside'?'Outside Gaborone':'Inside Gaborone'}</p>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:3px">${r.postedAt}${r.date?' · 📅 '+r.date:''}</p>
+      </div>
+      <div class="hd-j-right">
+        <div class="hd-j-price">P${r.totalPrice}</div>
+        ${btn}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function acceptJob(id) {
+  if (!currentWorker) return;
+  const reqs = store.getRequests();
+  const r = reqs.find(x=>x.id===id);
+  if (!r||r.status!=='pending') { toast('Job already taken.','⚠'); return; }
+  r.status='accepted'; r.worker=currentWorker.name; r.workerId=currentWorker.email;
+  store.saveRequests(reqs);
+  renderStats(); renderJobs();
+  toast('Job accepted!','🙌');
+}
+
+function toggleOnline() {
+  if (!currentWorker) return;
+  isOnline = !isOnline;
+  const users = store.getUsers();
+  users[currentWorker.email].online = isOnline;
+  store.saveUsers(users);
+  const sw  = document.getElementById('online-sw');
+  const lbl = document.getElementById('online-lbl');
+  sw.classList.toggle('on', isOnline);
+  lbl.textContent = isOnline ? 'Online' : 'Offline';
+  lbl.style.color = isOnline ? 'var(--success)' : 'var(--muted)';
+  toast(isOnline ? 'You are now online!' : 'You are now offline.', isOnline?'🟢':'🔴');
+}
+
+function doWorkerLogout() {
+  currentWorker = null; isOnline = false;
+  document.getElementById('dashboard-section').style.display = 'none';
+  document.getElementById('public-section').style.display    = '';
+  document.getElementById('w-login-email').value='';
+  document.getElementById('w-login-pass').value='';
+  toast('Logged out.','👋');
+}
 </script>
 
+<!-- ─── Supabase Configuration Script File Async Interface Injection ─── -->
 <script src="supabase.js"></script>
+
 <script>
-async function doWorkerRegister() {
-  const name  = document.getElementById('w-reg-name').value.trim();
-  const email = document.getElementById('w-reg-email').value.trim().toLowerCase();
-  const pass  = document.getElementById('w-reg-pass').value;
-  const phone = document.getElementById('w-reg-phone').value.trim();
-  const loc   = document.getElementById('w-reg-loc').value.trim();
-  const svcs  = [...document.querySelectorAll('#svc-pick input:checked')].map(c => c.value);
-  
-  if (!name || !email || !pass || !phone || !loc) { alert('Please fill in all fields.'); return; }
-  if (!svcs.length) { alert('Select at least one service.'); return; }
-
-  const nameParts = name.split(' ');
-  const firstName = nameParts[0];
-  const lastName = nameParts.slice(1).join(' ') || '';
-
-  if (!window.supabaseClient) {
-    alert("Supabase client script missing.");
-    return;
+  // Cloud fetch function targeted explicitly at your live 'jobs' table matrix container
+  async function loadTasksFromCloud() {
+    if (!window.supabaseClient) {
+      console.warn("Supabase context engine reference target unresolved.");
+      return;
+    }
+    const { data, error } = await window.supabaseClient
+      .from('jobs')
+      .select('*');
+        
+    if (error) console.error("Cloud Error Fetch query failure operations:", error.message);
+    else console.log("Live Cloud Data synced data payloads:", data);
   }
-
-  // STEP A: Insert core authentication data to the 'users' table
-  const { data: userData, error: userError } = await window.supabaseClient
-    .from('users')
-    .insert([
-      { 
-        first_name: firstName, 
-        last_name: lastName, 
-        email: email, 
-        phone: phone, 
-        role: 'pending_worker' 
-      }
-    ]).select();
-
-  if (userError) {
-    alert('Users Table Setup Error: ' + userError.message);
-    return;
-  }
-
-  const newWorkerUser = userData[0];
-
-  // STEP B: Insert configuration trace to 'worker_profiles' using valid layout parameters
-  const { error: profileError } = await window.supabaseClient
-    .from('worker_profiles')
-    .insert([
-      {
-        id: newWorkerUser.id,
-        user_id: newWorkerUser.id,
-        bio: 'Offered services: ' + svcs.join(', ') + '. Working area: ' + loc,
-        verified: false,
-        completed_jobs: 0,
-        rating: 5.0
-      }
-    ]);
-
-  if (profileError) {
-    alert('Worker Profiles Configuration Error: ' + profileError.message);
-    return;
-  }
-  
-  alert('Registration successfully submitted! Your profile is now awaiting KYC approval in the Admin Panel.');
-  window.location.reload();
-}
 </script>
 
 </body>
