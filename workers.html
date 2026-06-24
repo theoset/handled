@@ -63,24 +63,6 @@
               <div><div class="hd-wstat-num">2yr</div><div class="hd-wstat-lbl">Exp.</div></div>
             </div>
           </div>
-          <div class="hd-worker-card">
-            <div class="hd-worker-top">
-              <div class="hd-w-avatar" style="background:#4ade80">G</div>
-              <div class="hd-w-info">
-                <h4>Gary <span class="hd-badge hd-badge-verified" style="font-size:.6rem;padding:2px 6px">✓ Verified</span></h4>
-                <p>Gaborone, Phase 2</p>
-              </div>
-            </div>
-            <div class="hd-w-skills">
-              <span class="hd-skill-tag">🔨 Handyman</span>
-              <span class="hd-skill-tag">🔧 Plumbing</span>
-            </div>
-            <div class="hd-w-stats">
-              <div><div class="hd-wstat-num">134</div><div class="hd-wstat-lbl">Jobs</div></div>
-              <div><div class="hd-wstat-num">5.0★</div><div class="hd-wstat-lbl">Rating</div></div>
-              <div><div class="hd-wstat-num">4yr</div><div class="hd-wstat-lbl">Exp.</div></div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -121,11 +103,7 @@
               </div>
             </div>
             
-            <div style="margin: 15px 0; font-size: 0.75rem; color: var(--muted); border: 1px dashed var(--border); padding: 10px;">
-              📁 <strong>KYC Verification Required:</strong> Under manual settings check pipelines, Government ID card attachments and matching selfie uploads will be verified directly by application admins before account access keys are issued.
-            </div>
-
-            <button class="hd-auth-submit" onclick="doWorkerRegister()" style="width:100%; padding: 12px; background: var(--accent); border: none; color: #000; font-weight: bold; border-radius: var(--radius-sm); cursor: pointer;">Submit Registration & KYC →</button>
+            <button class="hd-auth-submit" onclick="doWorkerRegister()" style="width:100%; padding: 12px; background: var(--accent); border: none; color: #000; font-weight: bold; border-radius: var(--radius-sm); cursor: pointer;">Submit Registration &amp; KYC →</button>
           </div>
         </div>
       </div>
@@ -154,11 +132,11 @@ async function doWorkerRegister() {
   const lastName = nameParts.slice(1).join(' ') || '';
 
   if (!window.supabaseClient) {
-    alert("Supabase client not loaded. Verify your supabase.js asset script configuration mapping.");
+    alert("Supabase client library interface uninitialized.");
     return;
   }
 
-  // STEP A: Insert core identity account into 'users' table using the custom 'pending_worker' status flag
+  // STEP A: Create record strictly inside 'users' table
   const { data: userData, error: userError } = await window.supabaseClient
     .from('users')
     .insert([
@@ -167,39 +145,38 @@ async function doWorkerRegister() {
         last_name: lastName, 
         email: email, 
         phone: phone, 
-        role: 'pending_worker' // 🔒 Restricted, needs manual admin approval
+        role: 'pending_worker'
       }
     ]).select();
 
   if (userError) {
-    alert('User Table Setup Error: ' + userError.message);
+    alert('Users Table Insertion Failure: ' + userError.message);
     return;
   }
 
   const newWorkerUser = userData[0];
 
-  // STEP B: Insert corresponding row into 'worker_profiles' table with 'verified: false'
+  // STEP B: Insert safely into 'worker_profiles' without schema cache mismatches
   const { error: profileError } = await window.supabaseClient
     .from('worker_profiles')
     .insert([
       {
-        id: newWorkerUser.id, // Relational connection mapping link
-        bio: 'Offered services list: ' + svcs.join(', ') + '. Working area location: ' + loc,
-        verified: false,      // ⏳ Locked to false by default until you toggle it via admin panel
+        user_id: newWorkerUser.id,
+        bio: 'Offered services list: ' + svcs.join(', ') + '. Area: ' + loc,
+        verified: false, // Boolean value type parameters
         completed_jobs: 0,
         rating: 5.0
       }
     ]);
 
   if (profileError) {
-    alert('Profile Table Integration Error: ' + profileError.message);
+    alert('Worker Profiles Configuration Error: ' + profileError.message);
     return;
   }
   
-  alert('Registration successfully submitted! Your application profile has been routed to the Handled Admin Panel queue loops for KYC evaluation.');
-  window.location.reload(); // Refresh safely out of text inputs cache
+  alert('Registration successfully submitted to admin evaluation queue queues!');
+  window.location.reload();
 }
 </script>
-
 </body>
 </html>
