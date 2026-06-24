@@ -162,5 +162,19 @@
 
 <div id="toast-container"></div>
 <script src="store.js"></script>
+  <script src="supabase.js"></script>
+
+  <script>
+    // To access Supabase inside your existing functions now, use:
+    // window.supabaseClient
+    
+    async function loadTasksFromCloud() {
+      const { data, error } = await window.supabaseClient
+        .from('tasks')
+        .select('*');
+        
+      console.log("Live Cloud Data:", data);
+    }
+  </script>
 </body>
 </html>
