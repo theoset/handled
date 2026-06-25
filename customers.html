@@ -165,7 +165,6 @@ function switchAuthTab(t) {
 function showErr(id, msg) {
   const el = document.getElementById(id); el.textContent = msg; el.style.display = 'block';
 }
- Zarate
 function selectCat(cat, emoji, el) {
   selectedCat = cat; selectedEmoji = emoji;
   document.getElementById('form-title').textContent = 'Post a ' + cat + ' Request';
@@ -197,8 +196,13 @@ async function doRegister() {
 
   const db = window.supabaseClient || window.supabase;
 
-  if (db) {
-    // 🌟 FIXED: This inserts the new customer safely directly into your cloud tables!
+  if (!db) {
+    showErr('reg-err', 'Supabase configuration file missing or failed to initialize.');
+    alert("CRITICAL ERROR: Could not find 'window.supabaseClient'. Verify that 'supabase.js' is present in this folder and your keys are correct.");
+    return;
+  }
+
+  try {
     const { data, error } = await db
       .from('users')
       .insert([{ first_name: firstName, last_name: lastName, email: email, role: 'customer' }])
@@ -206,13 +210,19 @@ async function doRegister() {
 
     if (error) { 
       showErr('reg-err', 'Database Error: ' + error.message); 
+      alert("SUPABASE ERROR: " + error.message + "\nDetails: " + JSON.stringify(error));
       return; 
     }
     
-    loginCustomer(data[0]);
-    alert('Account successfully saved to your live Supabase users table!');
-  } else {
-    showErr('reg-err', 'Supabase context file link uninitialized.');
+    if (data && data.length > 0) {
+      loginCustomer(data[0]);
+      alert('Registration successful! Account saved to Supabase users table.');
+    } else {
+      alert("Query executed but no data was returned from the database.");
+    }
+  } catch (err) {
+    showErr('reg-err', 'Unexpected system crash: ' + err.message);
+    alert("JAVASCRIPT EXCEPTION: " + err.message);
   }
 }
 
@@ -230,7 +240,12 @@ async function postTask() {
 
   const db = window.supabaseClient || window.supabase;
 
-  if (db) {
+  if (!db) {
+    alert("Database connection uninitialized.");
+    return;
+  }
+
+  try {
     const { error } = await db
       .from('jobs')
       .insert([
@@ -245,9 +260,14 @@ async function postTask() {
         }
       ]);
 
-    if (error) { alert('Cloud Error: ' + error.message); return; }
-    alert('Job successfully posted to your cloud table!');
+    if (error) { 
+      alert('Cloud Post Error: ' + error.message); 
+      return; 
+    }
+    alert('Job successfully posted!');
     cancelForm();
+  } catch (err) {
+    alert("Exception caught while posting job: " + err.message);
   }
 }
 </script>
