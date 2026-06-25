@@ -152,7 +152,6 @@
   </footer>
 </div>
 
-<script src="store.js"></script>
 <script>
 let currentCustomer = null;
 let selectedCat = null;
@@ -183,24 +182,47 @@ function doLogout() { window.location.reload(); }
 
 <script src="supabase.js"></script>
 <script>
+// Global backup cross-checking to trap the exact client variable name from your screenshot
+const db = window.db || window.supabaseClient || window.supabase;
+
+async function doLogin() {
+  const email = document.getElementById('c-login-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('c-login-pass').value;
+  
+  if (!email || !pass) { showErr('login-err', 'Please enter your email and password.'); return; }
+  if (!db) { alert("Database connection uninitialized. Ensure supabase.js is in this folder."); return; }
+
+  try {
+    const { data, error } = await db
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .eq('role', 'customer')
+      .maybeSingle();
+
+    if (error) { showErr('login-err', 'Database error: ' + error.message); return; }
+
+    if (data) {
+      loginCustomer(data);
+    } else {
+      showErr('login-err', 'No customer account found matching that email.');
+    }
+  } catch (err) {
+    showErr('login-err', 'Login processing crash: ' + err.message);
+  }
+}
+
 async function doRegister() {
   const name  = document.getElementById('c-reg-name').value.trim();
   const email = document.getElementById('c-reg-email').value.trim().toLowerCase();
   const pass  = document.getElementById('c-reg-pass').value;
   
   if (!name || !email || !pass) { showErr('reg-err','Please fill in all fields.'); return; }
+  if (!db) { alert("Database client configuration asset missing."); return; }
 
   const nameParts = name.split(' ');
   const firstName = nameParts[0];
   const lastName = nameParts.slice(1).join(' ') || '';
-
-  const db = window.supabaseClient || window.supabase;
-
-  if (!db) {
-    showErr('reg-err', 'Supabase configuration file missing or failed to initialize.');
-    alert("CRITICAL ERROR: Could not find 'window.supabaseClient'. Verify that 'supabase.js' is present in this folder and your keys are correct.");
-    return;
-  }
 
   try {
     const { data, error } = await db
@@ -210,19 +232,15 @@ async function doRegister() {
 
     if (error) { 
       showErr('reg-err', 'Database Error: ' + error.message); 
-      alert("SUPABASE ERROR: " + error.message + "\nDetails: " + JSON.stringify(error));
       return; 
     }
     
     if (data && data.length > 0) {
       loginCustomer(data[0]);
-      alert('Registration successful! Account saved to Supabase users table.');
-    } else {
-      alert("Query executed but no data was returned from the database.");
+      alert('Registration successful! Account saved to Supabase.');
     }
   } catch (err) {
     showErr('reg-err', 'Unexpected system crash: ' + err.message);
-    alert("JAVASCRIPT EXCEPTION: " + err.message);
   }
 }
 
@@ -234,16 +252,10 @@ async function postTask() {
   if (!desc || !loc) { alert('Add description and location.'); return; }
   
   const tf = lt === 'outside' ? 50 : 30;
-
   const categoryMapping = { 'House Cleaning': 1, 'Gardening': 2, 'Moving Assistance': 3, 'Handyman': 4, 'Plumbing': 5, 'Delivery': 6, 'Miscellaneous': 7 };
   const targetIdNumber = categoryMapping[selectedCat] || 7;
 
-  const db = window.supabaseClient || window.supabase;
-
-  if (!db) {
-    alert("Database connection uninitialized.");
-    return;
-  }
+  if (!db) { alert("Database connection tracking uninitialized."); return; }
 
   try {
     const { error } = await db
@@ -260,10 +272,7 @@ async function postTask() {
         }
       ]);
 
-    if (error) { 
-      alert('Cloud Post Error: ' + error.message); 
-      return; 
-    }
+    if (error) { alert('Cloud Post Error: ' + error.message); return; }
     alert('Job successfully posted!');
     cancelForm();
   } catch (err) {
@@ -274,4 +283,3 @@ async function postTask() {
 
 </body>
 </html>
-
